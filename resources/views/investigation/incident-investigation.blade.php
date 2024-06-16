@@ -209,10 +209,16 @@
                         </td>
                         <td>
                           @if(!isset($incident->investigationBiD) && $incident->investigationstatus == "set")
-                            <a href="{{ route('incident-investigation-form-b', ['reportNo' => $incident->reportNo]) }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Start</a>
-                          @elseif(isset($incident->investigationBiD))
-                            <a href="{{ route('update-investigation-form-b', ['id' => $incident->investigationBiD]) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Update</a>
-                          @else
+                          <form action="{{ route('incident-investigation-form-b', ['reportNo' => $incident->reportNo]) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Start</button>
+                          </form>
+                        @elseif(isset($incident->investigationBiD))
+                          <form action="{{ route('form-update-incident-investigation-form-b', ['id' => $incident->investigationBiD]) }}" method="get">
+                            @csrf
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Update</button>
+                          </form>
+                        @else
                           <div class="flex justify-center">
                             <img src="{{ asset('images/icons/wrong_red.png') }}" width = "30px" height="30px">
                           </div>

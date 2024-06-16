@@ -314,9 +314,14 @@ class IncidentInvestigationController extends Controller
 
     public function putEditIncidentInvestigationReportB($id){
         $crudOperation = 'update';
-        $investigation = IncidentInvestigationPartB::where('investigation_a_id', $id)->first();
-        dd();
-        $investigation->investigation_team = json_decode($investigation->investigation_team);
+        // $investigation = IncidentInvestigationPartB::where('investigation_a_id', $id)->first();
+        $investigation = IncidentInvestigationPartB::find($id);
+        // dd();
+        // $investigation->investigation_team = json_decode($investigation->investigation_team);
+        // dd($investigation->investigation_team);
+        $investigationA = IncidentInvestigation::find($investigation->investigation_a_id);
+        $reportNo = $investigationA->reportNo;
+
         $incidentWhenAndWhere = $investigation->incidentWhenAndWhere;
 
         $projectSiteFolderName = $investigation->project_site;
@@ -332,9 +337,15 @@ class IncidentInvestigationController extends Controller
             $investigation->copyOfHirarc = "{$hirarc->hirarc_id} {$hirarc->desc_job}";
         }
         // dd($investigation);
+        $investigation->ncr = json_decode($investigation->ncr);
+        $investigation->mitigative_actions = json_decode($investigation->mitigative_actions);
+        $investigation->cont_improve = json_decode($investigation->cont_improve);
+        $investigation->penalty = json_decode($investigation->penalty);
+        $sho = User::find($investigation->sho_id);
+        $sho_name = $sho->name;
 
         // dd($investigation);
-        return view('investigation.investigation-form-b', compact('investigation', 'incidentWhenAndWhere', 'reportNo', 'crudOperation'));
+        return view('investigation.investigation-form-b', compact('investigation', 'incidentWhenAndWhere', 'reportNo', 'crudOperation', 'sho_name'));
     }
 
     public function updateIncidentPartA($reportNo, Request $request){
@@ -591,10 +602,10 @@ class IncidentInvestigationController extends Controller
     }
     public function getIncidentInvestigationReportBForm($reportNo){
             // Check if the authenticated user has the role "SHO"
-        if (!Auth::check() || Auth::user()->role !== 'SHO') {
-            // If not, return with an error message or redirect
-            return redirect()->back()->with('error', 'Unauthorized access.');
-        }
+    if (!Auth::check() || Auth::user()->role !== 'SHO') {
+        // If not, return with an error message or redirect
+        return redirect()->back()->with('error', 'Only SHO can fill form B!.');
+    }
         $incident = Incident::find($reportNo);
         $incidentWhenAndWhere = null;  // Initialize to null in case the incident is not found
     

@@ -127,7 +127,7 @@ Route::get('/user/incident-investigation-list', [IncidentInvestigationController
 Route::get('/user/investigation-form/{reportNo}', [IncidentInvestigationController::class, 'getIncidentInvestigationReport'])->name('incident-investigation-form');
 Route::get('/user/investigation-form-partb/{reportNo}', [IncidentInvestigationController::class, 'getIncidentInvestigationReportBForm'])->name('incident-investigation-form-b');
 Route::get('/user/investigation-form-update/{reportNo}', [IncidentInvestigationController::class, 'putEditIncidentInvestigationReport'])->name('update-incident-investigation-form');
-// Route::get('/user/investigation-form-update-part-b/{reportNo}', [IncidentInvestigationController::class, 'putEditIncidentInvestigationReportB'])->name('update-incident-investigation-form-b');
+Route::get('/user/investigation-form-update-part-b/{id}', [IncidentInvestigationController::class, 'putEditIncidentInvestigationReportB'])->name('form-update-incident-investigation-form-b');
 Route::post('/user/submit-investigation-form-parta/{reportNo}', [IncidentInvestigationController::class, 'submitIncidentPartA'])->name('submit-investigation-form-a');
 Route::post('/user/submit-investigation-form-partb/{reportNo}', [IncidentInvestigationController::class, 'submitIncidentPartB'])->name('submit-investigation-form-b');
 Route::post('/user/update-investigation-form-parta/{reportNo}', [IncidentInvestigationController::class, 'updateIncidentPartA'])->name('update-investigation-form-a');

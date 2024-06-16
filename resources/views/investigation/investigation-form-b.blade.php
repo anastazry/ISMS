@@ -356,7 +356,7 @@
                                                     <div class="flex justify-between" style="margin-top: 4%">
                                                         <div>
                                                             <label for="sho_name">Name : </label>
-                                                            <input type="text" name="sho_name" value="{{$investigation->sho_name}}">
+                                                            <input type="text" name="sho_name" value="{{$sho_name}}">
                                                         </div>
                                                         <div>
                                                             <label for="sho_signature_date">Date : </label>
