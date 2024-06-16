@@ -590,6 +590,11 @@ class IncidentInvestigationController extends Controller
 
     }
     public function getIncidentInvestigationReportBForm($reportNo){
+            // Check if the authenticated user has the role "SHO"
+        if (!Auth::check() || Auth::user()->role !== 'SHO') {
+            // If not, return with an error message or redirect
+            return redirect()->back()->with('error', 'Unauthorized access.');
+        }
         $incident = Incident::find($reportNo);
         $incidentWhenAndWhere = null;  // Initialize to null in case the incident is not found
     
