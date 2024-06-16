@@ -29,7 +29,6 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
 {
     $user = $request->user();
-
     // Handle profile photo upload
     if ($request->hasFile('profile_photo')) {
         $image = $request->file('profile_photo');
@@ -62,7 +61,7 @@ class ProfileController extends Controller
         $user->profile_photo = $storagePathUrlVerified;
     }
 
-    if ($request->has('user_signature_64')) {
+    if ($request->has('user_signature_64') && !is_null($request->input('user_signature_64'))) {
         $base64ImageVerified = $request->input('user_signature_64');
         
         // Remove the data URL prefix (e.g., 'data:image/png;base64,')
