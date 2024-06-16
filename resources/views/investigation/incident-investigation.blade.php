@@ -209,10 +209,7 @@
                         </td>
                         <td>
                           @if(!isset($incident->investigationBiD) && $incident->investigationstatus == "set")
-                          <form action="{{ route('incident-investigation-form-b', ['reportNo' => $incident->reportNo]) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Start</button>
-                          </form>
+                          <a href="{{ route('incident-investigation-form-b', ['reportNo' => $incident->reportNo]) }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Start</a>
                         @elseif(isset($incident->investigationBiD))
                           <form action="{{ route('form-update-incident-investigation-form-b', ['id' => $incident->investigationBiD]) }}" method="get">
                             @csrf
