@@ -417,29 +417,29 @@
             tbody.appendChild(newRow);
         }
 
-        function deleteImage(imagePath) {
-        if(confirm('You will never recover this even if you cancel! Are you sure you want to delete this image?')) {
-            fetch('{{ route('user-delete-image1') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ imagePath: imagePath })
-            }).then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                    window.location.reload();
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-            });
-        }
-        else{
-            window.history.back();
-        }
-}
+            function deleteImage(imagePath) {
+            if(confirm('You will never recover this even if you cancel! Are you sure you want to delete this image?')) {
+                fetch('{{ route('user-delete-image1') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ imagePath: imagePath })
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        window.location.reload();
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+            else{
+                window.history.back();
+            }
+    }
     </script>
 @endsection
 

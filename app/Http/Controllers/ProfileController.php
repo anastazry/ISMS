@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -32,19 +33,36 @@ class ProfileController extends Controller
     // Handle profile photo upload
     if ($request->hasFile('profile_photo')) {
         $image = $request->file('profile_photo');
-        $filename = 'profile-' . $user->id . '.' . $image->getClientOriginalExtension();
-    
-        // Store the file and get the path
-        $path = $image->storeAs('profile_photos', $filename, 'public');
-    
+        
+        // Generate a random file name for the image
+        $fileName = Str::random(40) . '.' . $image->getClientOriginalExtension();
+        $folderName = 'profile_photos/' . $user->id;
+        
+        // Specify the storage path where the image will be saved
+        $storagePath = 'public/' . $folderName;
+        $fullPath = $storagePath . '/' . $fileName;
+
+        // Ensure that the storage directories exist, create them if not
+        if (!Storage::exists($storagePath)) {
+            Storage::makeDirectory($storagePath);
+        }
+        
+        // Delete any existing files in the storage path
+        $files = Storage::allFiles($storagePath);
+        Storage::delete($files);
+        
+        // Store the new image file in the specified storage path
+        $path = $image->storeAs($folderName, $fileName, 'public');
+        
         // Extract only the file name from the path
         $fileNameOnly = pathinfo($path, PATHINFO_BASENAME);
-    
+        $storagePathUrlVerified = Storage::url($fullPath);
+        
         // Save only the file name in the database
-        $user->profile_photo = $fileNameOnly;
+        $user->profile_photo = $storagePathUrlVerified;
     }
 
-    if ($request->hasFile('user_signature')) {
+    if ($request->has('user_signature_64')) {
         $base64ImageVerified = $request->input('user_signature_64');
         
         // Remove the data URL prefix (e.g., 'data:image/png;base64,')
@@ -53,34 +71,32 @@ class ProfileController extends Controller
         // Decode the base64-encoded image data
         $imageDataVerified = base64_decode($base64ImageVerified);
         
-        // Generate unique file names for the images (e.g., using timestamp)
-        $fileNameVerified = 'signature_verifiedby' . $user->id . '.png';
+        // Generate a random file name for the image
+        $fileNameVerified = Str::random(40) . '.png';
+        $folderName = 'signature_verifiedby' . $user->id;
         
         // Specify the storage paths where the images will be saved
-        $storagePathVerified = 'public/signatures/usersignature';
+        $storagePathVerified = 'public/signatures/usersignature/' . $folderName;
+        $fullPathVerified = $storagePathVerified . '/' . $fileNameVerified;
         
         // Ensure that the storage directories exist, create them if not
         if (!Storage::exists($storagePathVerified)) {
             Storage::makeDirectory($storagePathVerified);
         }
         
-
+        // Delete any existing files in the storage path
+        $files = Storage::allFiles($storagePathVerified);
+        Storage::delete($files);
         
-        // Store the image files in the specified storage paths
-        Storage::put($storagePathVerified . '/' . $fileNameVerified, $imageDataVerified);
+        // Store the new image file in the specified storage path
+        Storage::put($fullPathVerified, $imageDataVerified);
         
-        // Get the full paths of the saved image files
-        $filePathVerified = Storage::url($storagePathVerified . '/' . $fileNameVerified);
+        // Get the URL of the saved image file
+        $fileUrlVerified = Storage::url($fullPathVerified);
         
-        // Optionally, return or use the file paths as needed
-        // dd('Verified Signature Path:', asset($filePathVerified), 'Approved Signature Path:', asset($filePathApproved));
-        
-        // Assign the public file path (URL) to $incident->firstImage
-        // $titlePage->ver_signature_image = asset($publicFilePath);
-        // dd($publicFilePath);
-        $user->user_signature = $filePathVerified;
+        // Update the user's signature path in the database
+        $user->user_signature = $fileUrlVerified;
     }
-    
 
     // Fill other fields and save
     $user->fill($request->validated());

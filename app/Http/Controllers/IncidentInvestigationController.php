@@ -313,6 +313,10 @@ class IncidentInvestigationController extends Controller
     }
 
     public function putEditIncidentInvestigationReportB($id){
+        if (!Auth::check() || Auth::user()->role !== 'SHO') {
+            // If not, return with an error message or redirect
+            return redirect()->back()->with('error', 'Only SHO can fill form B!.');
+        }
         $crudOperation = 'update';
         // $investigation = IncidentInvestigationPartB::where('investigation_a_id', $id)->first();
         $investigation = IncidentInvestigationPartB::find($id);
@@ -344,8 +348,14 @@ class IncidentInvestigationController extends Controller
         $sho = User::find($investigation->sho_id);
         $sho_name = $sho->name;
 
+        $breadcrumb1 = "Incident";
+        $breadcrumb2 = "Incident Investigation";
+        // $breadcrumb3 = "Incident Investigation (Part B)";
+        $headings = "Incident Investigation (Part B)";
+
         // dd($investigation);
-        return view('investigation.investigation-form-b', compact('investigation', 'incidentWhenAndWhere', 'reportNo', 'crudOperation', 'sho_name'));
+        return view('investigation.investigation-form-b', compact('investigation', 'incidentWhenAndWhere', 'reportNo', 'crudOperation', 'sho_name'
+                    , 'breadcrumb1', 'breadcrumb2', 'headings'));
     }
 
     public function updateIncidentPartA($reportNo, Request $request){
@@ -449,6 +459,10 @@ class IncidentInvestigationController extends Controller
     }
 
     public function updateIncidentPartB($id, Request $request){
+        if (!Auth::check() || Auth::user()->role !== 'SHO') {
+            // If not, return with an error message or redirect
+            return redirect()->back()->with('error', 'Only SHO can fill form B!.');
+        }
         $ncrCleaned = json_encode($this->arrayCleaner($request->ncr));
         $mitigative_actionsCleaned = json_encode($this->arrayCleaner($request->mitigative_actions));
         $cont_improveCleaned = json_encode($this->arrayCleaner($request->cont_improve));
@@ -576,6 +590,10 @@ class IncidentInvestigationController extends Controller
         //     $incidentDateFormatted = Carbon::parse($incident->incident_date)->format('d-m-Y');
         //     $incidentWhenAndWhere = "The incident occurred on {$incidentDateFormatted} at {$incident->incident_time}. It occurred at {$incident->incident_location}.";
         // }
+        if (!Auth::check() || Auth::user()->role !== 'SHO') {
+            // If not, return with an error message or redirect
+            return redirect()->back()->with('error', 'Only SHO can fill form B!.');
+        }
         $crudOperation = 'update';
         $investigation = IncidentInvestigationPartB::find($id);
         if($investigation){

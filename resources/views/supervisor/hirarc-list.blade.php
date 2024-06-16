@@ -215,6 +215,7 @@ select[name="hirarcTable_length"] {
                       </tr>
                     </thead>
                     <tbody>
+
                       @php
                       $i = 1; // Declare and initialize the variable $i
                       @endphp
@@ -270,7 +271,7 @@ select[name="hirarcTable_length"] {
   </div>
 
 </div>
-<div class="py-12" style="padding-top: 10px" id="secondDiv">
+{{-- <div class="py-12" style="padding-top: 10px" id="secondDiv">
   <div style="margin-right: 15px" class="">
 
       <div class="bg-white border rounded shadow p-4">
@@ -410,19 +411,19 @@ select[name="hirarcTable_length"] {
 
                       @endif                  
                   @endif
-              </div>
+              </div> --}}
 
-              </li>
-              <script>
+              {{-- </li> --}}
+              {{-- <script>
                   // Add event listener to the auditHeading element
                   document.getElementById('auditHeading{{ $loop->index }}').addEventListener('click', function() {
                       // Toggle the display property of the corresponding auditContent
                       const auditContent = document.getElementById('auditContent{{ $loop->index }}');
                       auditContent.style.display = auditContent.style.display === 'none' ? 'block' : 'none';
                   });
-              </script>
-          @endforeach
-      @endif
+              </script> --}}
+          {{-- @endforeach --}}
+      {{-- @endif --}}
   </ol>
 </div>
 <!-- Incident Modal -->

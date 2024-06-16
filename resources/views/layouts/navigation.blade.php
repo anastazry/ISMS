@@ -7,7 +7,7 @@
         
                     @if($user && $user->profile_photo)
                         <img class="mt-4 md:mt-8 lg:mt-12 w-24 h-24 rounded-full object-cover mx-auto block"
-                             src="{{ asset('storage/profile_photos/' . $user->profile_photo) }}?v={{ $user->updated_at->timestamp }}"
+                             src="{{ asset($user->profile_photo) }}"
                              alt="Profile Image">
                     @else
                         <img class="mt-4 md:mt-8 lg:mt-12 w-20 h-20 rounded-full object-cover mx-auto block"

@@ -79,7 +79,9 @@
             <x-input-label for="Signature" :value="__('Signature')" />
             <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
             id="user_signature" type="file" name="user_signature" accept="image/*">
-            <div>
+            <div style="margin-top: 10px">
+            <x-input-label for="Signature" :value="__('Current Signature')" />
+
                 <div id="signature-pad" class="signature-pad">
                     <div class="signature-pad-footer" style="text-align: right">
                         <button type="button" id="clear-signature" class="btn btn-danger">Clear</button>
@@ -87,8 +89,10 @@
                 </div> 
                 <div class="canvas-container">
                     @if(isset($user->user_signature))
-                    <img src="{{$user->user_signature }}" alt="">
+                        <img src="{{ asset($user->user_signature) }}" alt="User Signature">
                     @endif
+                
+                
                     <canvas id="signatureCanvas" class="border border-black" width=400 height=200></canvas>
                 </div>
 

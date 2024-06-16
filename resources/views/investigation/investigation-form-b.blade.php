@@ -87,10 +87,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <div class="bg-white border rounded shadow p-4">
-                <div class="border-b p-2">
+                {{-- <div class="border-b p-2">
                     <!-- Header content goes here -->
                     Incident Investigation (Part B)
-                </div>
+                </div> --}}
                 <div class="p-2">
                     <!-- Body content goes here -->
                     @if(Session::has('message'))
