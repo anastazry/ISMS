@@ -64,40 +64,11 @@ border: 1px black;
                     @csrf
                 <div class="flex justify-center items-center gap-2">
                     <div class="relative flex items-center">
-                        <div class="bg-green-500 text-white p-2 rounded-l-lg">
+                        <div class="bg-green-500 text-white p-2 rounded-l-lg rounded-r-lg">
                             Title Page
                         </div>
-                        <div class="absolute -right-2 bg-white-500 h-full w-4 flex items-center justify-center">
-                            <div class="border-t-6 border-b-6 border-r-6 border-black"></div>
-                        </div>
                     </div>
-                    <div class="relative flex items-center border-t-6 border-b-6 border-r-6 border-black">
-                        <div class=" text-black p-2 border-black">
-                            HIRARC
-                        </div>
-                        <div class="absolute -right-2  h-full w-4 flex items-center justify-center">
-                            <div class="border-t-6 border-b-6 border-transparent border-r-6 border-black"></div>
-                        </div>
-                    </div>
-                    <div class="relative flex items-center">
-                        <div class="bg-white text-black p-2 rounded-l-lg">
-                            Hazard Identification
-                        </div>
-                        <div class="absolute -right-2 bg-white h-full w-4 flex items-center justify-center">
-                            <div class="border-t-6 border-b-6 border-r-6 border-black"></div>
-                        </div>
-                    </div>
-                    <div class="relative flex items-center border-t-6 border-b-6 border-r-6 border-black">
-                        <div class=" text-black p-2 border-black">
-                            Risk Assessment
-                        </div>
-                        <div class="absolute -right-2  h-full w-4 flex items-center justify-center">
-                            <div class="border-t-6 border-b-6 border-transparent border-r-6 border-black"></div>
-                        </div>
-                    </div>
-                    <div class=" text-black p-2 rounded-r-lg">
-                        Control
-                    </div>
+
                 </div>
                 
                 <div id="witnesses">
@@ -111,27 +82,31 @@ border: 1px black;
                                     <div style=" cursor: pointer;" >
                                         <h2>Verified By</h2>
                                     </div>
+                                    @php
+                                    $currentDate = date('Y-m-d');
+                                    @endphp
                                     <div id="optionsApproval">
                                         <h3 style="text-align:left">Verification Date</h3>
                                         @if(isset($titlePage->verification_date))
-                                        <input type="date" name="verification_date" value="{{ old('verification_date', $titlePage->verification_date ?? '') }}" class="p-2 border rounded-md w-full">
+                                        <input type="date" name="verification_date" value="{{ old('verification_date', $currentDate ?? '') }}" class="p-2 border rounded-md w-full" readonly>
                                         @else
-                                        <input type="date" name="verification_date" value="{{ old('verification_date') }}" class="p-2 border rounded-md w-full">
+                                        <input type="date" name="verification_date" value="{{ old('verification_date', $currentDate) }}" class="p-2 border rounded-md w-full">
                                         @endif
                                         @error('verification_date')
                                             <span class="text-red-500">{{ $message }}</span>
                                         @enderror
-                                        @Auth
+                                        @auth
                                         <h3 style="text-align:left">Name and Signature</h3>
                                         @if(isset($titlePage->verified_by))
-                                        <input type="text" name="verified_by" value="{{ old('verified_by', $titlePage->verified_by ?? '') }}" class="p-2 border rounded-md w-full">
+                                            <input type="text" name="verified_by" value="{{ old('verified_by', $titlePage->verified_by) }}" class="p-2 border rounded-md w-full" readonly>
                                         @else
-                                        <input type="text" name="verified_by" value="{{ old('verified_by') }}" class="p-2 border rounded-md w-full">
+                                            <input type="text" name="verified_by" value="{{ old('verified_by', Auth::user()->name) }}" class="p-2 border rounded-md w-full" readonly>
                                         @endif
                                         @error('verified_by')
                                             <span class="text-red-500">{{ $message }}</span>
                                         @enderror
-@endauth
+                                    @endauth
+                                    
                                         @if(isset($titlePage->ver_signature_image))
                                         <h3 style="text-align:left">Signature</h3>
                                         <div class="canvas-container">

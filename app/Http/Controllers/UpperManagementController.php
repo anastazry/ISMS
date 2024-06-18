@@ -45,7 +45,7 @@ class UpperManagementController extends Controller
     }
 
     public function approveHirarcForm($hirarc_id){
-        $breadcrumb1 ="HIRARC Approval/Verification";
+        $breadcrumb1 ="HIRARC Approval";
         $breadcrumb2 ="HIRARC Approval";
         $headings = "HIRARC Approval";
         $hirarcReport = $hirarcReport = HirarcReport::where('hirarc_id', $hirarc_id)->first();
@@ -60,11 +60,14 @@ class UpperManagementController extends Controller
 
     public function verifyHirarcForm($hirarc_id){
         $hirarcReport = $hirarcReport = HirarcReport::where('hirarc_id', $hirarc_id)->first();
+        $breadcrumb1 = "Approve Form";
+        $breadcrumb2 = "Verify Form";
+        $headings = "Verify Form";
         if($hirarcReport){
             $titlePage = TitlePage::where('tpage_id', $hirarcReport->tpage_id)->first();
-            return view('supervisor.form-approval.verify-hirarc-form', compact('titlePage', 'hirarc_id'));
+            return view('supervisor.form-approval.verify-hirarc-form', compact('titlePage', 'hirarc_id', 'breadcrumb1', 'breadcrumb2', 'headings'));
         }else{
-            return view('supervisor.form-approval.verify-hirarc-form', compact('hirarc_id'));
+            return view('supervisor.form-approval.verify-hirarc-form', compact('hirarc_id', 'breadcrumb1', 'breadcrumb2', 'headings'));
 
         }
     }

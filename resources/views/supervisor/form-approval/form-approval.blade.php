@@ -226,16 +226,20 @@
                           {{$hirarcItem['hirarc']->prepared_by}}
                         </td> --}}
                         <td>
-                        @php($user = Auth::user())
-                          <form id="" method="post" action="">
-                            @csrf
-                            @if($user->role == 'Project Manager')
-                            <button type="button" onclick="redirectToManagerApprove('{{ $hirarcItem['hirarc']->hirarc_id }}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-2xl">Approve</button>
+                          @if(isset($hirarcItem['titlePage']->appr_signature_img) && $hirarcItem['titlePage']->ver_signature_image)
+                            <img src="{{ asset('images/icons/right_green.png') }}" width = "30px" height="30px">
+                          @else
+                            @php($user = Auth::user())
+                            <form id="" method="post" action="">
+                                @csrf
+                                @if($user->role == 'Project Manager')
+                                <button type="button" onclick="redirectToManagerApprove('{{ $hirarcItem['hirarc']->hirarc_id }}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-2xl">Approve</button>
 
-                            @elseif($user->role == 'SHO')
-                            <button type="button" onclick="redirectToManagerVerify('{{ $hirarcItem['hirarc']->hirarc_id }}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-2xl">Verify</button>
-                            @endif
-                          </form>
+                                @elseif($user->role == 'SHO')
+                                <button type="button" onclick="redirectToManagerVerify('{{ $hirarcItem['hirarc']->hirarc_id }}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-2xl">Verify</button>
+                                @endif
+                            </form>
+                          @endif
                           
 
                         </td>

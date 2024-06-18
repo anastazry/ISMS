@@ -1,4 +1,5 @@
-<aside id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+
+<aside style="width:14%" id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
         <div class="shrink-0 flex items-center justify-center flex-col bg-">
             @auth
@@ -7,7 +8,7 @@
         
                     @if($user && $user->profile_photo)
                         <img class="mt-4 md:mt-8 lg:mt-12 w-24 h-24 rounded-full object-cover mx-auto block"
-                             src="{{ asset($user->profile_photo) }}"
+                             src="{{ asset($user->profile_photo) }}?v={{ $user->updated_at->timestamp }}"
                              alt="Profile Image">
                     @else
                         <img class="mt-4 md:mt-8 lg:mt-12 w-20 h-20 rounded-full object-cover mx-auto block"
