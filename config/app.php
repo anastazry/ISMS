@@ -172,7 +172,6 @@ return [
         // Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
-        Andyabih\LaravelToUML\LaravelToUMLServiceProvider::class,
     ])->toArray(),
 
     /*
