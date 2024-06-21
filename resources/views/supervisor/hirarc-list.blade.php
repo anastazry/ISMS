@@ -137,42 +137,15 @@ select[name="hirarcTable_length"] {
         margin-bottom: 20px; /* Add margin between divs */
     }
 
+
+
+
 </style>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-{{-- <div style="margin-left: 14%; background-color: white" class="bg-white border rounded shadow p-4">
-  <nav class="flex mb-4" aria-label="Breadcrumb">
-    <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
-      <li class="inline-flex items-center">
-        <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
-          <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
-          </svg>
-          Dashboard
-        </a>
-      </li>
-      <li>
-        <div class="flex items-center">
-          <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-          </svg>
-          <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Hirarc List</a>
-        </div>
-      </li> --}}
-      {{-- <li aria-current="page">
-        <div class="flex items-center">
-          <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-          </svg>
-          <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Flowbite</span>
-        </div>
-      </li> --}}
-    {{-- </ol>
-  </nav>
-  <h3 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Hirarc List</h3>
-</div> --}}
+
 <div class="flex-container">
   <div class="py-12" style="padding-top: 10px" id="firstDiv">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="table">
       {{-- <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white text-gray-900">
               {{ __("You're logged in!") }}
@@ -199,15 +172,15 @@ select[name="hirarcTable_length"] {
           <div class="p-2"><a href="{{ route('user-add-hirarc-details')}}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Add New Report</a></div>
           
           <div class="flex flex-col">
-            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 w-full">
-              <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 w-full" id="table">
+              <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8" >
                 <div class="overflow-hidden">
                   <table id="hirarcTable" class="min-w-full text-left text-sm font-light">
                     <thead
                       class="border-b font-medium dark:border-neutral-500">
                       <tr>
                         <th scope="col" class="px-6 py-4">No.</th>
-                        <th scope="col" class="px-6 py-4">Description</th>
+                        <th scope="col" class="px-6 py-4" id="desc-head">Description</th>
                         <th scope="col" class="px-6 py-4">Location</th>
                         <th scope="col" class="px-6 py-4">Date</th>
                         <th scope="col" class="px-5 py-4">Prepared By</th>
@@ -271,159 +244,8 @@ select[name="hirarcTable_length"] {
   </div>
 
 </div>
-{{-- <div class="py-12" style="padding-top: 10px" id="secondDiv">
-  <div style="margin-right: 15px" class="">
 
-      <div class="bg-white border rounded shadow p-4">
-          <div class="border-b p-2">
-              <!-- Header content goes here -->
-              <span style="font-weight: bold">Audit Trail</span>
-          </div>
-          @php
-              $counterAudit = 1;
-          @endphp
 
-<div class="max-h-10vh overflow-y-scroll" style="max-height: 52.5vh;">
-  <ol class="relative border border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
-      @if (isset($auditData))
-          @foreach ($auditData as $audit)
-              @php
-                  $user = \App\Models\User::find($audit->user_id);
-                  $userName = $user ? $user->name : 'User Not Found';
-              @endphp
-              <li class="py-4">
-                  <div class="flex items-center justify-between p-4 bg-white border rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600 cursor-pointer" id="auditHeading{{ $loop->index }}">
-                      <time class="text-xs font-normal text-gray-400 sm:order-last sm:mb-0">{{ date('d-m-Y', strtotime($audit->updated_at)) }}</time>
-                      <div class="text-sm font-normal text-gray-500 dark:text-gray-300"><span style="color: blue">{{ $userName }}</span> has <span style="color: #39393A">{{ $audit->event }}</span> the Risk data!</div>
-                  </div>
-                  <div style="display: none" id="auditContent{{ $loop->index }}">
-                  @if (isset($audit->old_values))
-                      <?php 
-                          $oldData = is_array($audit->old_values) ? $audit->old_values : json_decode($audit->old_values, true);
-                          // ddd($oldData);
-                          $newData = is_array($audit->new_values) ? $audit->new_values : json_decode($audit->new_values, true);
-                      ?>
-                      @if (isset($audit->updated_at))
-                          <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px"><span style="font-weight: bold">Time Updated:</span> {{ date('H:i:s', strtotime($audit->updated_at)) }}</div>
-                      @endif
-                      @if($audit->event == 'deleted')
-                          @if (isset($oldData['risk_desc']))
-                          <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                              <span style="font-weight: bold">Risk:</span>
-                              {{ $oldData['risk_desc'] }} 
-                          </div>
-                          @if (isset($oldData['current_control']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Current Control:</span>
-                                  {{ $oldData['current_control'] }}
-                              </div>
-                          @endif
-                          @if (isset($oldData['likelihood']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Likelihood:</span>
-                                  {{ $oldData['likelihood'] }}
-                              </div>
-                          @endif  
-
-                          @if (isset($oldData['severity']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Severity:</span>
-                                  {{ $oldData['severity'] }}
-                              </div>
-                          @endif  
-
-                          @if (isset($oldData['score']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Score:</span>
-                                  {{ $oldData['score'] }}
-                              </div>
-                          @endif  
-
-                          @if (isset($oldData['index']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Index:</span>
-                                  {{ $oldData['index'] }}
-                              </div>
-                          @endif  
-                      @endif
-                      @elseif($audit->event == 'created')
-                          @if (isset($newData['new_control']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">New Control:</span>
-                                  {{ $newData['new_control'] }}
-                              </div>
-                          @endif
-
-                          @if (isset($newData['opportunity']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Opportunity:</span>
-                                  {{ $newData['opportunity'] }}
-                              </div>
-                          @endif
-
-                          @if (isset($newData['responsibility']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Responsibility:</span>
-                                  {{ $newData['responsibility'] }}
-                              </div>
-                          @endif
-
-                          @if (isset($newData['status']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Status:</span>
-                                  {{ $newData['status'] }}
-                              </div>
-                          @endif
-
-                      @else
-                          @if (isset($newData['opportunity']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Opportunity: </span>
-                                  @if(isset($oldData['opportunity']))
-                                      {{ $oldData['opportunity'] }} to {{ $newData['opportunity'] }}
-                                  @else
-                                      {{ $newData['opportunity'] }}
-                                  @endif
-                              </div>
-                          @endif
-
-                          @if (isset($newData['new_control']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">New Control:</span>
-                                  @if(isset($oldData['new_control']))
-                                      {{ $oldData['new_control'] }} to {{ $newData['new_control'] }}
-                                  @else
-                                      {{ $newData['new_control'] }}
-                                  @endif
-                              </div>
-                          @endif
-
-                          @if (isset($newData['responsibility']))
-                              <div class="text-sm font-normal text-gray-500 dark:text-gray-300" style="margin-left: 15px">
-                                  <span style="font-weight: bold">Responsibility: </span>
-                                  @if(isset($oldData['responsibility']))
-                                      {{ $oldData['responsibility'] }} to {{ $newData['responsibility'] }}
-                                  @else
-                                      {{ $newData['responsibility'] }}
-                                  @endif
-                              </div>
-                          @endif
-
-                      @endif                  
-                  @endif
-              </div> --}}
-
-              {{-- </li> --}}
-              {{-- <script>
-                  // Add event listener to the auditHeading element
-                  document.getElementById('auditHeading{{ $loop->index }}').addEventListener('click', function() {
-                      // Toggle the display property of the corresponding auditContent
-                      const auditContent = document.getElementById('auditContent{{ $loop->index }}');
-                      auditContent.style.display = auditContent.style.display === 'none' ? 'block' : 'none';
-                  });
-              </script> --}}
-          {{-- @endforeach --}}
-      {{-- @endif --}}
   </ol>
 </div>
 <!-- Incident Modal -->

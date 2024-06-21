@@ -76,13 +76,22 @@
   #secondDiv {
     margin-left: 20px; /* Adjust the margin as needed */
   }
+  @media screen and (min-width: 600px) and (max-width: 1200px) {
+
+#contents {
+    width: 87%; /* Adjust width for smaller screens */
+    margin-left: 13%; /* Reset margin-left for smaller screens */
+    /* padding-left: 30%; Consider adjusting padding for smaller screens if needed */
+    /* background-color: #000; */
+}
+}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <div class="py-12">
-  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="contents">
     <div class="bg-white border rounded shadow p-4">
       <div class="p-2">
         <!-- Body content goes here -->

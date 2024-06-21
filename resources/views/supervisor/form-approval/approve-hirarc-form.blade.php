@@ -51,9 +51,19 @@ border: 1px black;
     color: #fff; /* Text color remains white on hover */
     cursor: pointer; /* Show pointer cursor on hover */
 }
+
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+
+#contents {
+    width: 87%; /* Adjust width for smaller screens */
+    margin-left: 13%; /* Reset margin-left for smaller screens */
+    /* padding-left: 30%; Consider adjusting padding for smaller screens if needed */
+    /* background-color: #000; */
+}
+}
 </style>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="contents">
 
             <div class="bg-white border rounded shadow p-4">
                 <div class="border-b p-2">
@@ -83,13 +93,13 @@ border: 1px black;
                                         <h2>Approved By</h2>
                                     </div>
                                     @php
-                                    $currentDate = date('Y-m-d');
+                                        $currentDate = date('Y-m-d');
                                     @endphp
                                 
                                 <div id="optionsApproval">
                                     <h3 style="text-align:left">Approval Date</h3>
                                     @if(isset($titlePage->approval_date))
-                                        <input type="date" name="approval_date" value="{{ old('approval_date', $titlePage->approval_date) }}" class="p-2 border rounded-md w-full" readonly>
+                                        <input type="date" name="approval_date" value="{{ old('approval_date', $currentDate) }}" class="p-2 border rounded-md w-full" readonly>
                                     @else
                                         <input type="date" name="approval_date" value="{{ old('approval_date', $currentDate) }}" class="p-2 border rounded-md w-full" readonly>
                                     @endif

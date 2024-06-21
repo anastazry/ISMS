@@ -18,8 +18,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $breadcrumb1 = "Profile";
+        $headings = "Profile";
         return view('profile.edit', [
             'user' => $request->user(),
+            'breadcrumb1' => $breadcrumb1,
+            'headings' => $headings,
         ]);
     }
 

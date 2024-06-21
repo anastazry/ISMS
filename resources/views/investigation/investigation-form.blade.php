@@ -86,6 +86,15 @@
         .opaque-bg {
             opacity: 0.1;
         }
+        @media screen and (min-width: 600px) and (max-width: 1200px) {
+
+#contents {
+    width: 87%; /* Adjust width for smaller screens */
+    margin-left: 13%; /* Reset margin-left for smaller screens */
+    /* padding-left: 30%; Consider adjusting padding for smaller screens if needed */
+    /* background-color: #000; */
+}
+}
 </style>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -114,7 +123,7 @@
     </div>
 </div> --}}
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="contents">
 
             <div class="bg-white border rounded shadow p-4">
                 <div class="border-b p-2">

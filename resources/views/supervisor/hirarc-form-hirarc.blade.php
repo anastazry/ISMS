@@ -43,9 +43,19 @@
     padding-bottom: 5px; 
     color: white;
 }
+@media screen and (min-width: 600px) and (max-width: 1200px) {
+
+
+            #contents {
+                width: 80%; /* Adjust width for smaller screens */
+                margin-left: 13%; /* Reset margin-left for smaller screens */
+                /* padding-left: 30%; Consider adjusting padding for smaller screens if needed */
+                /* background-color: #000; */
+            }
+        }
 </style>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="contents">
 
             <div class="bg-white border rounded shadow p-4">
 
@@ -175,11 +185,12 @@
                             <tr>
                                 <th>Inspection Date</th>
                                 <td>
-                                    <input type="date" name="inspection_date" value="{{ old('inspection_date') }}" class="p-2 border rounded-md w-full" required>
+                                    <input type="date" name="inspection_date" value="{{ old('inspection_date', date('Y-m-d')) }}" class="p-2 border rounded-md w-full" required>
                                     @error('inspection_date')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
                                 </td>
+                                
                                 {{-- <input type="hidden" name="hirarc_id" value="{{ $hirarc_id }}" class="p-2 border rounded-md w-full"> --}}
                             </tr>
                         </tbody>

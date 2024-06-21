@@ -5,10 +5,19 @@
     .bg-gray-200 {
         background-color: #d1d5db; /* Change to your desired grey color */
     }
+    @media screen and (min-width: 600px) and (max-width: 1200px) {
+
+        #contents {
+            width: 87%; /* Adjust width for smaller screens */
+            margin-left: 13%; /* Reset margin-left for smaller screens */
+            /* padding-left: 30%; Consider adjusting padding for smaller screens if needed */
+            /* background-color: #000; */
+        }
+    }
 </style>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" id="contents">
 
             <div class="bg-white border rounded shadow p-4">
 
