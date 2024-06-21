@@ -83,7 +83,7 @@
                             {{-- @foreach ($hazard_data['updatedHazards'] as $index => $hazard) --}}
                             @foreach($hazard_data['updatedHazards'] as $index => $hazard)
                             <tr class="witness">
-                                <td><input type="text" name="hazard_name[]" value="{{ old('hazard_name[]', $hazard->hazard) }}" class="p-2 border rounded-md w-full h-20"></td>
+                                <td><input type="text" name="hazard_name[]" value="{{ old('hazard_name[]', $hazard->hazard) }}" class="p-2 border rounded-md w-full h-20" readonly></td>
                 
                                 @if(isset($hazard_data['updatedHazardsRisks'][$index]))
                                     <!-- Display risk data for the hazard -->
@@ -95,7 +95,7 @@
                                     <td><input type="number" name="risk[likelihood][]" value="{{ old('risk[likelihood][]', $hazard_data['updatedHazardsRisks'][$index]->likelihood) }}" class="border rounded-md w-full h-20" required></td>
                                     <td><input type="number" name="risk[severity][]" value="{{ old('risk[severity][]', $hazard_data['updatedHazardsRisks'][$index]->severity) }}" class="p-2 border rounded-md w-full h-20" required></td>
                                     <td><input type="number" name="risk[score][]" value="{{ old('risk[score][]', $hazard_data['updatedHazardsRisks'][$index]->score) }}" class="p-2 border rounded-md w-full h-20" required></td>
-                                    <td><input type="text" name="risk[index][]" value="{{ old('risk[index][]', $hazard_data['updatedHazardsRisks'][$index]->index) }}" class="p-2 border rounded-md w-full h-20" required></td>
+                                    <td><input type="text" name="risk[index][]" value="{{ old('risk[index][]', $hazard_data['updatedHazardsRisks'][$index]->index) }}" class="p-2 border rounded-md w-full h-20" readonly></td>
                                     <td><input type="hidden" name="risk[hazard_id][]" value="{{ old('risk[hazard_id][]', $hazard_data['updatedHazardsRisks'][$index]->hazard_id) }}" class="p-2 border rounded-md w-full h-20"></td>
                                     <td><input type="hidden" name="risk[risk_id][]" value="{{ old('risk[risk_id][]', $hazard_data['updatedHazardsRisks'][$index]->risk_id) }}" class="p-2 border rounded-md w-full h-20"></td>
 
@@ -106,20 +106,20 @@
                                     <td><input type="number" name="risk[likelihood][]" class="border rounded-md w-full h-20" required></td>
                                     <td><input type="number" name="risk[severity][]" class="p-2 border rounded-md w-full h-20" required></td>
                                     <td><input type="number" name="risk[score][]" class="p-2 border rounded-md w-full h-20" required></td>
-                                    <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20" required></td>
+                                    <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20" readonly></td>
                                     <td><input type="hidden" name="risk[hazard_id][]" value="{{ old('risk[hazard_id][]', $hazard_data['updatedHazards'][$index]->hazard_id) }}" class="p-2 border rounded-md w-full h-20"></td>
 
                                 @endif
                             </tr>
                             @endforeach
                         @else
-                            <td><input type="text" name="hazard_name[]" value="" class="p-2 border rounded-md w-full h-20"></td>
+                            <td><input type="text" name="hazard_name[]" value="" class="p-2 border rounded-md w-full h-20" readonly></td>
                             <td><textarea name="risk[name][]" class="p-2 border rounded-md w-full h-20"></textarea></td>
                             <td><textarea name="risk[curr_control][]" class="p-2 border rounded-md w-full h-20"></textarea></td>
                             <td><input type="number" name="risk[likelihood][]" class="border rounded-md w-full h-20 "></td>
                             <td><input type="number" name="risk[severity][]" class="p-2 border rounded-md w-full h-20"></td>
                             <td><input type="number" name="risk[score][]" class="p-2 border rounded-md w-full h-20"></td>
-                            <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20"></td>
+                            <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20" readonly></td>
                     
                         @endif
                             </tr>

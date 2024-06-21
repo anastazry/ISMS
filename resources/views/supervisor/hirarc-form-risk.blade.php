@@ -80,26 +80,26 @@
                             @if($hazard_data->isNotEmpty())
                             @foreach($hazard_data as $data)
                                 <tr class="witness">
-                                    <td><input type="text" name="hazard_name[]" value="{{ $data->hazard }}" class="p-2 border rounded-md w-full h-20"></td>
+                                    <td><input type="text" name="hazard_name[]" value="{{ $data->hazard }}" class="p-2 border rounded-md w-full h-20" readonly></td>
                                     <td><textarea name="risk[risk_desc][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                                     <td><textarea name="risk[current_control][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                                     <td><input type="number" name="risk[likelihood][]" class="border rounded-md w-full h-20 "></td>
                                     <td><input type="number" name="risk[severity][]" class="p-2 border rounded-md w-full h-20"></td>
                                     <td><input type="number" name="risk[score][]" class="p-2 border rounded-md w-full h-20" readonly></td>
-                                    <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20 risk-index-input"></td>
+                                    <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20 risk-index-input" readonly></td>
                                     {{-- <td><input type="text" id="riskInput" name="risk[index][]" class="p-2 border rounded-md w-full h-20"></td> --}}
                                     <input type="hidden" name="hazard_id[]" value="{{ $data->hazard_id }}">
                                     <input type="hidden" name="hirarc_id[]" value="{{ $data->hirarc_id }}">
                                 </tr>
                             @endforeach
                         @else
-                            <td><input type="text" name="hazard_name[]" value="" class="p-2 border rounded-md w-full h-20"></td>
+                            <td><input type="text" name="hazard_name[]" value="" class="p-2 border rounded-md w-full h-20" readonly></td>
                             <td><textarea name="risk[name][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                             <td><textarea name="risk[curr_control][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                             <td><input type="number" name="risk[likelihood][]" class="border rounded-md w-full h-20 "></td>
                             <td><input type="number" name="risk[severity][]" class="p-2 border rounded-md w-full h-20"></td>
                             <td><input type="number" name="risk[score][]" class="p-2 border rounded-md w-full h-20"></td>
-                            <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20 risk-index-input"></td>
+                            <td><input type="text" name="risk[index][]" class="p-2 border rounded-md w-full h-20 risk-index-input" readonly></td>
                             {{-- <td><input type="text" id="riskInput" name="risk[index][]" class="p-2 border rounded-md w-full h-20"></td> --}}
                     
                         @endif

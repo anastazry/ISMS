@@ -10,14 +10,15 @@ use App\Models\Control;
 use App\Models\TitlePage;
 use App\Models\HirarcReport;
 use Illuminate\Http\Request;
+use App\Events\NewHirarcAdded;
 use OwenIt\Auditing\Models\Audit;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection; 
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use App\Events\NewHirarcAdded;
 // use DateTime;
 
 class HirarcController extends Controller
@@ -56,6 +57,25 @@ class HirarcController extends Controller
             'headings' => $headings
         ]);
     }
+
+    public function getAssignmentList(){
+        $userFullName = auth()->user()->name; // Assuming this correctly retrieves the authenticated user's full name
+
+        $hirarcList = DB::table('hirarc_tbl')
+                        ->where('prepared_by', $userFullName)
+                        ->whereNull('prepared_by_signature')
+                        ->get();
+        
+        // dd($assignmentList);
+        $breadcrumb1 = "HIRARC";
+        $headings = "Assignment List";
+        return view('supervisor.hirarc-assignment-list', [
+            'hirarcList' => $hirarcList,
+            'breadcrumb1' => $breadcrumb1,
+            'headings' => $headings
+        ]);
+    }
+
     public function getHirarcForm(){
         // Generate a random 6-digit number
         $randomNumber = mt_rand(100000, 999999);
@@ -85,6 +105,33 @@ class HirarcController extends Controller
         $breadcrumb2 = "Add HIRARC";
         $headings = "Add HIRARC";
         return view('supervisor.hirarc-form-hirarc', compact('userFullName', 'breadcrumb1', 'breadcrumb2', 'headings')); // Pass $userFullName, not 'userFullName'
+    }
+
+    public function assignHirarc() {
+        $userNames = DB::select('SELECT name FROM users');
+        // dd($userNames);
+        return view('assign-hirarc', ['userNames' => $userNames]);
+    }
+
+    public function postAssignHirarc(Request $request) {
+        // Debugging the request data
+        // dd($request->all());
+    
+        $hirarc = new Hirarc();
+        $hirarc->desc_job = $request->input('desc_job');
+        $hirarc->location = $request->input('location');
+        $hirarc->prepared_by = $request->input('prepared_by');
+        $hirarc->inspection_date = $request->input('inspection_date');
+    
+        // Save the new Hirarc instance to the database
+        $hirarc->save();
+
+        $hirarcReport = new HirarcReport();
+        $hirarcReport->hirarc_id = $hirarc->hirarc_id;
+        $hirarcReport->save();
+    
+        // Redirect or return response
+        return redirect()->route('user.hirarc-list')->with('message', 'Hirarc assigned successfully.');
     }
     
 
@@ -499,7 +546,7 @@ class HirarcController extends Controller
     public function putEditHirarcDetails(Request $request,int $hirarc_id){
         $userId = auth()->user()->id;
         $hirarc = Hirarc::findOrFail($hirarc_id);
-
+// dd($request);
     if (isset($request['prepared_by_signature']) && !empty($request['prepared_by_signature'])){
         // dd('if');
 
@@ -846,38 +893,54 @@ $count = 0;
                 return view('supervisor.hirarc-list', ['hirarcItems' => $hirarcItems]);
     }
 
-    public function deleteHirarc(string $hirarc_id){
+
+
+    public function deleteHirarc(string $hirarc_id) {
         $userRole = auth()->user()->role;
         // dd($userRole);
         $hirarcReport = HirarcReport::where('hirarc_id', $hirarc_id)->first();
-        if(isset($hirarcReport->tpage_id)){
-            if($userRole == 'Supervisor'){
+        if (isset($hirarcReport->tpage_id)) {
+            if ($userRole == 'Supervisor') {
                 Session()->flash('error', 'Sorry only SHO and Project Manager can delete verified form!');
                 return redirect()->route('user.hirarc-list');
             }
         }
         // dd($hirarc);
-        if($hirarcReport){
+        if ($hirarcReport) {
             $hirarc = Hirarc::find($hirarc_id);
-            if($hirarc){
+            if ($hirarc) {
+                // Check if prepared_by_signature is not null and delete the file if it does not match the exclusion path
+                if (!is_null($hirarc->prepared_by_signature)) {
+                    $signaturePath = $hirarc->prepared_by_signature;
+                    // Ensure the path is correct
+                    // dd($signaturePath);
+                    $excludePath = 'public/storage/signatures/usersignature';
+                    if (Storage::disk('public')->exists($signaturePath) && $signaturePath !== $excludePath) {
+                        Storage::disk('public')->delete($signaturePath);
+                    } else {
+                        // You can log or handle the case where the path matches the excludePath or does not exist
+                        // For example, use: dd('Path does not exist or matches exclude path: ' . $signaturePath);
+                    }
+                }
+    
                 Risks::where('hirarc_id', $hirarc->hirarc_id)->delete();
                 Control::where('hirarc_id', $hirarc->hirarc_id)->delete();
                 Hazard::where('hirarc_id', $hirarc->hirarc_id)->delete();
                 Hirarc::where('hirarc_id', $hirarc->hirarc_id)->delete();
-                if($hirarcReport->tpage_id){
+                if ($hirarcReport->tpage_id) {
                     $hirarcTitlePage = TitlePage::where('tpage_id', $hirarcReport->tpage_id)->first();
                     $hirarcTitlePage->delete();
-
                 }
                 $hirarcReport->delete();
                 $hirarc->delete();
             }
-
+    
             Session()->flash('message', 'HIRARC has been deleted!');
             return redirect()->route('user.hirarc-list');
         }
-
     }
+    
+    
 
 
             // Delete related controls

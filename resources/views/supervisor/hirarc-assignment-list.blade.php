@@ -170,9 +170,11 @@ select[name="hirarcTable_length"] {
             </div>
           @endif
           <div class="flex space-x-2">
+            @if(Auth::check() && Auth::user()->role !== 'Supervisor')
             <div class="p-2">
-                <a href="{{ route('user-add-hirarc-details') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Add New Report</a>
+                <a href="{{ route('user.assign-hirarc') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Assign Task</a>
             </div>
+        @endif
         </div>
         
 
@@ -198,39 +200,39 @@ select[name="hirarcTable_length"] {
                       @php
                       $i = 1; // Declare and initialize the variable $i
                       @endphp
-                      @foreach ($hirarcItems as $hirarcItem)
-                      @if(isset($hirarcItem['hirarc']->hirarc_id))
+                      @foreach ($hirarcList as $hirarcItem)
+                      @if(isset($hirarcItem->hirarc_id))
                       <tr class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
                         <td class="whitespace-nowrap px-6 py-4 font-medium">
                           {{ $i++ }}
                         </td>
                         <td class="whitespace-nowrap px-6 py-4 font-medium">
-                          @isset($hirarcItem['hirarc']->desc_job)
-                              {{ $hirarcItem['hirarc']->desc_job }}
+                          @isset($hirarcItem->desc_job)
+                              {{ $hirarcItem->desc_job }}
                           @endisset
                       </td>
                       <td class="whitespace-nowrap px-6 py-4 font-medium">
-                        @isset($hirarcItem['hirarc']->location)
-                            {{ $hirarcItem['hirarc']->location }}
+                        @isset($hirarcItem->location)
+                            {{ $hirarcItem->location }}
                         @endisset
                       </td>
                       <td class="whitespace-nowrap px-6 py-4 font-medium">
-                        @isset($hirarcItem['hirarc']->inspection_date)
-                            {{ $hirarcItem['hirarc']->inspection_date }}
+                        @isset($hirarcItem->inspection_date)
+                            {{ $hirarcItem->inspection_date }}
                         @endisset
                       </td>
                       <td class="whitespace-nowrap px-6 py-4 font-medium">
-                        @isset($hirarcItem['hirarc']->prepared_by)
-                            {{ $hirarcItem['hirarc']->prepared_by }}
+                        @isset($hirarcItem->prepared_by)
+                            {{ $hirarcItem->prepared_by }}
                         @endisset
                       </td>
                         <td>
-                          <form id="" method="post" action="{{ route('user-delete-hirarc', $hirarcItem['hirarc']->hirarc_id)}}">
+                          <form id="" method="post" action="{{ route('user-delete-hirarc', $hirarcItem->hirarc_id)}}">
                             @csrf 
                             @method('DELETE')
-                            <a href="{{ route('user-edit-hirarc', ['hirarc_id' => $hirarcItem['hirarc']->hirarc_id]) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Edit</a>
+                            <a href="{{ route('user-edit-hirarc', ['hirarc_id' => $hirarcItem->hirarc_id]) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Start</a>
                             {{-- <button type="button" onclick="confirmDelete()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Delete</button> --}}
-                            <button type="submit" onclick="return confirmDelete()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Delete</button>
+                            {{-- <button type="submit" onclick="return confirmDelete()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Delete</button> --}}
                         </form>  
                         
                           

@@ -77,7 +77,7 @@
                             @if($hazard_data->isNotEmpty())
                             @foreach($hazard_data as $data)
                             <tr class="witness">
-                                <td><input type="text" name="hazard_name[]" value="{{ $data->hazard }}" class="p-2 border rounded-md w-full h-20"></td>
+                                <td><input type="text" name="hazard_name[]" value="{{ $data->hazard }}" class="p-2 border rounded-md w-full h-20" readonly></td>
                                 <td><textarea name="control[opportunity][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                                 <td><textarea name="control[new_control][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                                 <td><input type="text" name="control[responsibility][]" class="border rounded-md w-full h-20 "></td>
@@ -94,7 +94,7 @@
                             @endforeach
                             @else
                             <tr class="witness">
-                                <td><input type="text" name="hazard_name[]" value="" class="p-2 border rounded-md w-full h-20"></td>
+                                <td><input type="text" name="hazard_name[]" value="" class="p-2 border rounded-md w-full h-20" readonly></td>
                                 <td><textarea name="control[opportunity][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                                 <td><textarea name="risk[new_control][]" class="p-2 border rounded-md w-full h-20" style="margin-top: 7px;"></textarea></td>
                                 <td><input type="text" name="risk[responsibility][]" class="border rounded-md w-full h-20 "></td>

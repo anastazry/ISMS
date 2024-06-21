@@ -27,7 +27,7 @@
             <div class="bg-white border rounded shadow p-4">
                 <div class="border-b p-2">
                     <!-- Header content goes here -->
-                    Add HIRARC
+                    Add HIRARC 
                 </div>
                 <form method="post" action="{{ route('user-edit-hirarc-details', ['hirarc_id' => $hirarcData['hirarc_items']->hirarc_id]) }}" enctype="multipart/form-data">
                     @csrf
@@ -91,7 +91,7 @@
                             <tr>
                                 <th>Prepared By</th>
                                 <td>
-                                    <input type="text" name="prepared_by" value="{{ old('prepared_by', $hirarcData['hirarc_items']->prepared_by) }}" class="p-2 border rounded-md w-full"required>
+                                    <input type="text" name="prepared_by" value="{{ old('prepared_by', $hirarcData['hirarc_items']->prepared_by) }}" class="p-2 border rounded-md w-full"required readonly>
                                     @error('prepared_by')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
@@ -100,55 +100,40 @@
                             <tr>
                                 <th>Signature</th>
                                 <td>
-<div id="existingSignature">
-                                    @if(isset($hirarcData['hirarc_items']->prepared_by_signature))
-                                    <div  class="signature-pad-footer" style="text-align: right">
-                                        <button type="button" id="clear-signature" class="btn btn-danger">Clear Signature</button>
-                                    </div>
-                                    <div class="flex justify-center items-center h-full">
-                                        <img src="{{ $hirarcData['hirarc_items']->prepared_by_signature }}" alt="User Signature">
-                                    </div>
-                                    @else
-                                    <div>
-                                        <h3 style="text-align:left">Signature</h3>
-                                        <div id="signature-pad-app" class="signature-pad">
-                                            <div class="signature-pad-footer" style="text-align: right">
-                                                <button type="button" id="clear-signature-prepared" class="btn btn-danger">Clear</button>
+                                    <div id="existingSignature">
+                                        @if(isset($hirarcData['hirarc_items']->prepared_by_signature))
+                                            <div class="flex justify-center items-center h-full">
+                                                <img src="{{ $hirarcData['hirarc_items']->prepared_by_signature }}" alt="User Signature">
                                             </div>
-                                        </div>
-                                        {{-- <textarea id="verified_by_signature" name="verified_by_signature" style="display: none"></textarea> --}}
-                                        <input type="text" name="prepared_by_signature" id="prepared_by_signature" value="" style="display: none" required>
-                                        <div class="canvas-container">
-                                            <canvas id="signatureCanvas" class="border border-black" width="400" height="200"></canvas>
-                                        </div>                                            
-                                        {{-- <canvas id="signatureCanvas" class="border border-black w-full" height="500"></canvas> --}}
-                                        <button id="saveSignatureBtn" class="btn btn-primary">Save Signature</button>
-                                    </div>
-                                    @endif
-
-</div>
-                                    <div id="newSignature" style="display: none">
-                                        <div id="signature-pad-app" class="signature-pad">
-                                            <div class="signature-pad-footer" style="text-align: right">
-                                                <button type="button" id="clear-signature-prepared" class="btn btn-danger">Clear</button>
+                                        @else
+                                            <div>
+                                                <h3 style="text-align:left">Signature</h3>
+                                                <div id="signature-pad-app" class="signature-pad">
+                                                    <div class="signature-pad-footer" style="text-align: right">
+                                                        <button type="button" id="clear-signature-prepared" class="btn btn-danger">Clear</button>
+                                                    </div>
+                                                </div>
+                                                {{-- <textarea id="verified_by_signature" name="verified_by_signature" style="display: none"></textarea> --}}
+                                                <input type="text" name="prepared_by_signature" id="prepared_by_signature" value="" style="display: none">
+                                                <div class="flex justify-center items-center h-full">
+                                                    <div class="canvas-container">
+                                                        <canvas id="signatureCanvas" class="border border-black" width="400" height="200"></canvas>
+                                                    </div>
+                                                </div>                                       
+                                                {{-- <canvas id="signatureCanvas" class="border border-black w-full" height="500"></canvas> --}}
+                                                <div class="signature-pad-footer" style="text-align: right">
+                                                    <button id="saveSignatureBtn" class="btn btn-primary">Save Signature</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        {{-- <textarea id="verified_by_signature" name="verified_by_signature" style="display: none"></textarea> --}}
-                                        <input type="text" name="prepared_by_signature" id="prepared_by_signature" value="" style="display: none">
-                                        <div class="flex justify-center items-center h-full">
-                                            <div class="canvas-container">
-                                                <canvas id="signatureCanvas" class="border border-black" width="400" height="200"></canvas>
-                                            </div>
-                                        </div>                                       
-                                        {{-- <canvas id="signatureCanvas" class="border border-black w-full" height="500"></canvas> --}}
-                                        <div class="signature-pad-footer" style="text-align: right">
-                                            <button id="saveSignatureBtn" class="btn btn-primary">Save Signature</button>
-                                        </div>
-
+                                            <script>
+                                                // JavaScript to hide the newSignature div if it falls to the else block
+                                                document.getElementById('newSignature').style.display = 'none';
+                                            </script>
+                                        @endif
                                     </div>
                                 </td>
-
                             </tr>
+                            
 
                             <tr>
                                 <th>Inspection Date</th>
@@ -317,6 +302,7 @@
             var saveButton = document.getElementById('saveSignatureBtn');
             console.log(signaturePad);
             var signatureInputField = document.getElementById('prepared_by_signature');
+            console.log(signatureInputField.value);
             const clearSignatureBtnPrepared = document.getElementById('clear-signature-prepared');
             var existingSignature = document.getElementById('existingSignature');
             var newSignature = document.getElementById('newSignature');
@@ -342,8 +328,8 @@
             });
             }
 
-
-            cancelButton.addEventListener('click', function(event){
+if(cancelButton){
+                cancelButton.addEventListener('click', function(event){
                 console.log('camam');
                 event.preventDefault();
                 var confirmed = window.confirm("Are you sure you want to remove your own signature?");
@@ -356,6 +342,8 @@
 
 
             });
+}
+
             saveButton.addEventListener('click', function(event) {
                 event.preventDefault();
 
@@ -375,14 +363,16 @@
             });
 
 
-
-        cancelButton.addEventListener('click', function(event) {
+if(cancelButton){
+            cancelButton.addEventListener('click', function(event) {
             signaturePad.clear();
             // Clear the value of the hidden input field when cancelling
             signatureInputField.value = '';
             saveSignatureBtnClicked = false;
 
         });
+}
+
 
 
 

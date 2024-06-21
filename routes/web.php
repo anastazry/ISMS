@@ -85,6 +85,9 @@ Route::post('/delete-image-incident', [IncidentController::class, 'deleteImage']
 Route::match(['get', 'post'],'/user/hirarc-list', [HirarcController::class, 'getHirarcList'])->name('user.hirarc-list');  //view hirarc lists
 Route::get('/user/hazard-details', [HirarcController::class, 'getHirarcFormHazard'])->name('user.hirarc-form-view');   //untuk view hazard details
 Route::get('/user/hirarc-form-titlepage', [HirarcController::class, 'getHirarcForm'])->name('user.hirarc-form-titlepage');  
+Route::get('/user/assignment-list', [HirarcController::class, 'getAssignmentList'])->name('user.assignment-list');  
+Route::get('/user/assign-hirarc', [HirarcController::class, 'assignHirarc'])->name('user.assign-hirarc');  
+Route::post('/user/add-hirarc-assignment', [HirarcController::class, 'postAssignHirarc'])->name('user.post-assign-hirarc');  
 // Route::post('/user/hirarc-form-hirarc', [HirarcController::class, 'getHirarcForm'])->name('user.hirarc-form-hirarc');
 Route::get('/user/hirarc-form-risk', [HirarcController::class, 'getHirarcFormRisk'])->name('user-hirarc-risks');
 Route::post('/user/hirarc-form-control', [HirarcController::class, 'getHirarcFormControl'])->name('user-hirarc-control');
