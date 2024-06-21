@@ -1,25 +1,34 @@
 @extends('layouts.app')
 <style>
-    .uniform-card {
-    height: auto; /* Adjust the height as needed */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow-y: auto;
-}
-@media (max-width: 768px) {
-    .uniform-card {
-        height: auto; /* Adjust for smaller screens */
-    }
-}
+        .uniform-card {
+            height: auto; /* Default height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
 
+        /* Media query for screen width between 768px and 1024px */
+        @media screen and (min-width: 600px) and (max-width: 1200px) {
+            .uniform-card {
+                /* Adjusted styles for smaller screens */
+                height: auto;
+            }
+
+            #contents {
+                width: 80%; /* Adjust width for smaller screens */
+                margin-left: 13%; /* Reset margin-left for smaller screens */
+                /* padding-left: 30%; Consider adjusting padding for smaller screens if needed */
+                /* background-color: #000; */
+            }
+        }
 </style>
 @section('content')
-<div class="py-12">
+<div class="py-12" >
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <div class="max-w-8xl mx-auto sm:px-6 lg:px-8" style="margin-top: -5%; padding-left: 5%" >
+    <div class="max-w-8xl mx-auto sm:px-6 lg:px-8" style="margin-top: -5%; padding-left: 5%" id="contents" >
         <div style="text-align: right; margin-top: 5%">
             <form method="get" action="{{ route('dashboard-year') }}" id="yearForm">
                 <!-- Use a <select> element for dropdown -->

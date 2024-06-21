@@ -64,6 +64,18 @@
             flex-grow: 1;
             overflow: auto;
         }
+        @media (max-width: 768px) {
+            body {
+                margin-left: 0;
+            }
+            .content-container {
+                margin-left: 0;
+            }
+            .bg-white.border.rounded.shadow.p-4 {
+                margin-left: 0;
+                margin-bottom: 16px;
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased full-height">

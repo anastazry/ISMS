@@ -9,6 +9,7 @@ use App\Models\HirarcReport;
 use Illuminate\Http\Request;
 use App\Events\MessageCreated;
 use App\Events\NewHirarcAdded;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\IncidentInvestigation;
@@ -79,7 +80,8 @@ class UserController extends Controller
     
             $incidents = Incident::whereYear('incident_date', 2023)->get();
             $incidentsCount = $incidents->count();
-    
+
+            // dd($hirarcCount);
             $hirarcCountsByMonth = Hirarc::whereYear('inspection_date', 2024)
                                  ->selectRaw('MONTH(inspection_date) as month, COUNT(*) as count')
                                  ->groupBy('month')
@@ -204,8 +206,10 @@ class UserController extends Controller
             'year' => $year
         ];
         // dd($counts);
+        $breadcrumb1 = "Dashboard";
+        $headings = "Dashboard";
 
-        return view('dashboard', compact('counts'));
+        return view('dashboard', compact('counts', 'breadcrumb1', 'headings'));
     }
 
     public function updateFirstTimePassword (){
