@@ -252,126 +252,103 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var cancelButtonCurrSignature = document.getElementById('clear-signature');
-            var canvas = document.getElementById('signatureCanvas');
-            var signaturePad = new SignaturePad(canvas);
-            var saveButton = document.getElementById('saveSignatureBtn');
-            var cancelButton = document.getElementById('clear-signature-prepared');
-            var signatureInputField = document.getElementsByClassName('prepared_by_signature');
-            const clearSignatureBtnPrepared = document.getElementById('clear-signature-prepared');
-            var existingSignature = document.getElementById('existingSignature');
-            var newSignature = document.getElementById('newSignature');
-            var submitBtn = document.getElementById('submitBtn');
-            let clearButtonClicked = false;
-            let saveSignatureBtnClicked = false;
+document.addEventListener('DOMContentLoaded', function() {
+    var cancelButtonCurrSignature = document.getElementById('clear-signature');
+    var canvas = document.getElementById('signatureCanvas');
+    var signaturePad = new SignaturePad(canvas);
+    var saveButton = document.getElementById('saveSignatureBtn');
+    var clearButtonPrepared = document.getElementById('clear-signature-prepared');
+    var allInputSignature = document.getElementsByClassName('prepared_by_signature');
+    var existingSignature = document.getElementById('existingSignature');
+    var newSignature = document.getElementById('newSignature');
+    var submitBtn = document.getElementById('submitBtn');
+    let clearButtonClicked = false;
+    let saveSignatureBtnClicked = false;
 
-            if(cancelButtonCurrSignature){
-                cancelButtonCurrSignature.addEventListener('click', function(event){
-                console.log('camam');
-                event.preventDefault();
-                var confirmed = window.confirm("Are you sure you want to remove your own signature?");
-                if(confirmed){
-                    existingSignature.style.display = 'none';
-                    newSignature.style.display = 'block';
-                    clearButtonClicked = true;
-
-                }
-
-
-            });
-            }
-
-            clearSignatureBtnPrepared.addEventListener('click', function(event) {
+    if(cancelButtonCurrSignature) {
+        cancelButtonCurrSignature.addEventListener('click', function(event) {
+            event.preventDefault();
+            var confirmed = window.confirm("Are you sure you want to remove your own signature?");
+            if(confirmed) {
+                existingSignature.style.display = 'none';
+                newSignature.style.display = 'block';
+                clearButtonClicked = true;
                 signaturePad.clear();
-                // Clear the value of the hidden input field when cancelling
-                signatureInputField.value = '';
-            });
-
-            submitBtn.addEventListener('click', function(event){
-                if(signaturePad && signaturePad.isEmpty()  && !saveSignatureBtnClicked){
-                    if (clearButtonClicked && signatureInputField.value.trim() === '') {
-                        console.log(saveSignatureBtnClicked);
-                        event.preventDefault();
-                        alert('Please provide a signature!');
-                    }
-                }
-            });
-
-            if(cancelButton){
-                cancelButton.addEventListener('click', function(event){
-                event.preventDefault();
-                var confirmed = window.confirm("Are you sure you want to remove your own signature?");
-                if(confirmed){
-                    existingSignature.style.display = 'none';
-                    newSignature.style.display = 'block';
-                    clearButtonClicked = true;
-
-                }
-
-
-            });
+                // Clear the value of all hidden input fields when cancelling
+                Array.prototype.forEach.call(allInputSignature, function(inputSignature) {
+                    inputSignature.value = '';
+                });
             }
-
-            saveButton.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                if (!signaturePad.isEmpty()) {
-                    var dataURL = signaturePad.toDataURL();
-
-                    // Update the value of the hidden input field with the signature data URL
-                    signatureInputField.value = dataURL;
-                    for (var i = 0; i < signatureInputField.length; i++) {
-                        signatureInputField[i].value = dataURL;
-                    }
-
-                    console.log('Signature data URL:', signatureInputField.value);
-                    saveSignatureBtnClicked = true;
-
-                    alert('Signature saved successfully!');
-                } else {
-                    alert('Please provide a signature before saving.');
-                }
-            });
-
-
-
-        cancelButton.addEventListener('click', function(event) {
-            signaturePad.clear();
-            // Clear the value of the hidden input field when cancelling
-            signatureInputField.value = '';
-            saveSignatureBtnClicked = false;
-
         });
+    }
 
-        const cancelButtonHirarc = document.getElementById('cancelButton');
-        const modal = document.getElementById('cancelConfirmationModal');
-        const confirmCancelButton = document.getElementById('confirmCancelButton');
-        const cancelModalButton = document.getElementById('cancelModalButton');
-
-        // When cancel button is clicked, show the modal
-        cancelButtonHirarc.addEventListener('click', function() {
-            modal.style.display = 'block';
-        });
-
-        // When Yes is clicked in the modal, proceed to the route
-        confirmCancelButton.addEventListener('click', function() {
-            // Redirect to the specified route
-            window.location.href = '{{ route('user.hirarc-list') }}';
-        });
-
-        // When No is clicked in the modal, close the modal
-        cancelModalButton.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-
-        // Close the modal if user clicks outside of it
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
+    clearButtonPrepared.addEventListener('click', function(event) {
+        signaturePad.clear();
+        // Clear the value of all hidden input fields when clearing
+        Array.prototype.forEach.call(allInputSignature, function(inputSignature) {
+            inputSignature.value = '';
         });
     });
+
+    submitBtn.addEventListener('click', function(event) {
+        if(clearButtonClicked && !saveSignatureBtnClicked) {
+            if (signaturePad.isEmpty()) {
+                event.preventDefault();
+                alert('Please provide a signature!');
+            }
+        }
+    });
+
+    saveButton.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        if (!signaturePad.isEmpty()) {
+            var confirmed = window.confirm("Are you sure you want to save this signature? Once saved, it cannot be changed.");
+            if (confirmed) {
+                var dataURL = signaturePad.toDataURL();
+
+                // Update the value of all hidden input fields with the signature data URL
+                Array.prototype.forEach.call(allInputSignature, function(inputSignature) {
+                    inputSignature.value = dataURL;
+                });
+                saveSignatureBtnClicked = true;
+
+                alert('Signature saved successfully!');
+            }
+        } else {
+            alert('Please provide a signature before saving.');
+        }
+    });
+
+    const cancelButtonHirarc = document.getElementById('cancelButton');
+    const modal = document.getElementById('cancelConfirmationModal');
+    const confirmCancelButton = document.getElementById('confirmCancelButton');
+    const cancelModalButton = document.getElementById('cancelModalButton');
+
+    // When cancel button is clicked, show the modal
+    cancelButtonHirarc.addEventListener('click', function() {
+        modal.style.display = 'block';
+    });
+
+    // When Yes is clicked in the modal, proceed to the route
+    confirmCancelButton.addEventListener('click', function() {
+        // Redirect to the specified route
+        window.location.href = '{{ route('user.hirarc-list') }}';
+    });
+
+    // When No is clicked in the modal, close the modal
+    cancelModalButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Close the modal if user clicks outside of it
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+
 
 
 

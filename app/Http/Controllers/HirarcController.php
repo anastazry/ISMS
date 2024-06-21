@@ -257,6 +257,7 @@ class HirarcController extends Controller
     }
 
     public function postAddHirarcDetails(Request $request){
+        // dd($request);
         $userId = auth()->user()->id;
         $hirarc = new Hirarc();
         if (isset($request['prepared_by_signature']) && !empty($request['prepared_by_signature'])){
