@@ -124,6 +124,14 @@
     /* padding-left: 30%; Consider adjusting padding for smaller screens if needed */
     /* background-color: #000; */
 }
+
+}
+select[name="hirarcTable_length"] {
+  width: 25%;
+}
+
+#hirarcTable_length{
+  width: 20%;
 }
 </style>
 <div class="py-12">

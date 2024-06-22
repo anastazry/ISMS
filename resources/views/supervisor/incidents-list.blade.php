@@ -125,6 +125,14 @@
     /* background-color: #000; */
 }
 }
+select[name="hirarcTable_length"] {
+  width: 25%;
+}
+
+#hirarcTable_length{
+  width: 20%;
+}
+
 </style>
 <div class="py-12">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
