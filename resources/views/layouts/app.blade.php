@@ -50,6 +50,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
+            background-color: #f7fafc;
             /* overflow: hidden; */
         }
         .full-height {
@@ -64,10 +65,37 @@
             flex-grow: 1;
             overflow: auto;
         }
-        @media (max-width: 768px) {
-            body {
+
+        #headersz{
+            margin-left: 14%;
+        }
+        @media (max-width: 1000px) {
+            #navbar {
+                /* background: black; */
+                width: 150%;
                 margin-left: 0;
             }
+            #contents{
+                margin-left: 20%;
+
+            }
+            #myChart,#myChart{
+                height: 400px;
+            }
+
+            #headersz{
+                margin-left: 20%;
+                background: black;
+            }
+            .flex-container{
+                margin-left: 10%;
+                max-width: 30%;
+            }
+
+            #firstDiv{
+                max-width: 80%;
+            }
+
             .content-container {
                 margin-left: 0;
             }
@@ -81,7 +109,7 @@
 <body class="font-sans antialiased full-height">
     <div class="content-container">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-        <div style="margin-left: 14%; background-color: white" class="bg-white border rounded shadow p-4">
+        <div style=" background-color: white" class="bg-white border rounded shadow p-4" id="headersz">
             <nav class="flex mb-4" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
                     <li class="inline-flex items-center">

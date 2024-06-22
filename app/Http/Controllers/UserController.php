@@ -75,10 +75,10 @@ class UserController extends Controller
             return view('admin.dashboard-admin', compact('hirarcCount', 'hirarcReportCount' , 'incidentCount' , 'incidentInvestigationCount', 'userCount',
                             'svCount', 'pmCount', 'shoCount' , 'headings'));
         }else{
-            $hirarc = Hirarc::whereYear('inspection_date', 2023)->get();
+            $hirarc = Hirarc::whereYear('inspection_date', 2024)->get();
             $hirarcCount = $hirarc->count();
     
-            $incidents = Incident::whereYear('incident_date', 2023)->get();
+            $incidents = Incident::whereYear('incident_date', 2024)->get();
             $incidentsCount = $incidents->count();
 
             // dd($hirarcCount);
@@ -88,7 +88,7 @@ class UserController extends Controller
                                  ->orderBy('month')
                                  ->get();
     
-            $incidentsCountsByMonth = Incident::whereYear('incident_date', 2023)
+            $incidentsCountsByMonth = Incident::whereYear('incident_date', 2024)
             ->selectRaw('MONTH(incident_date) as month, COUNT(*) as count')
             ->groupBy('month')
             ->orderBy('month')

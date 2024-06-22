@@ -22,6 +22,12 @@
                 /* background-color: #000; */
             }
         }
+
+        .card-container1 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
 </style>
 @section('content')
 <div class="py-12" >
@@ -45,8 +51,21 @@
                 {{-- <button type="submit">Submit</button> --}}
             </form>
         </div>
+        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
         
-        <div class="grid grid-cols-2 gap-8">
+            <div class="card-container1" style="margin-top: 3%">
+                <a href="#" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 uniform-card">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">HIRARC Verified</h5>
+                    {{-- <p class="font-normal text-gray-700 dark:text-gray-400">{{$hirarcReportCount}}</p> --}}
+                </a>
+
+                <a href="#" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 uniform-card">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Incidents Investigated</h5>
+                    {{-- <p class="font-normal text-gray-700 dark:text-gray-400">{{$incidentInvestigationCount}}</p> --}}
+                </a>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-8" style="max-height: 80%">
             <a href="#" class="uniform-card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 @if(isset($counts['year']))
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Incidents ({{$counts['year']}})</h5>
@@ -94,7 +113,7 @@
 
         // Create the Chart.js chart using the dynamically generated data
         const myChart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: chartData.map(data => data.month), // Extract month names from chartData
                 datasets: [{
@@ -123,7 +142,7 @@
 
         const ctx2 = document.getElementById('myChart2').getContext('2d');
         const myChart2 = new Chart(ctx2, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: chartData2.map(data => data.month), // Extract month names from chartData
                 datasets: [{
