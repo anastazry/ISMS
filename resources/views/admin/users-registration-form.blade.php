@@ -50,14 +50,14 @@
                         </div>
                         <div class="mt-4">
                             <x-input-label for="role" :value="__('Role')" />
-                            <select id="role" name="role" class="block mt-1 w-full" required autocomplete="username">
+                            <select id="role" name="role" class="block mt-1 w-full" required autocomplete="role">
                                 <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="Supervisor" {{ old('role') == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
-                                <option value="Project Manager" {{ old('role') == 'Project Manager' ? 'selected' : '' }}>Project Manager</option>
-                                <option value="SHO" {{ old('role') == 'SHO' ? 'selected' : '' }}>SHO</option>
+                                <option value="Super" {{ old('role') == 'Super' ? 'selected' : '' }}>Supervisor</option>
+                                <option value="IO" {{ old('role') == 'IO' ? 'selected' : '' }}>Project Manager</option>
                             </select>
                             <x-input-error :messages="$errors->get('role')" class="mt-2" />
                         </div>
+                        
                         
                         
                 

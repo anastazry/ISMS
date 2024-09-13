@@ -10,6 +10,7 @@ use App\Models\InjuredPerson;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\IncidentReported;
+use App\Models\IncidentInvestigation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -269,6 +270,16 @@ class IncidentController extends Controller
     
     public function deleteIncident(string $id){
         $incident = Incident::find($id);
+        $reportNo = $incident->reportNo;
+    
+        // Check if the report number exists in the IncidentInvestigation table
+        $exists = IncidentInvestigation::where('reportNo', $reportNo)->exists();
+        if ($exists) {
+            return redirect()->back()->with('error', 'Incident has been investigated!');
+        } else {
+            // The report number does not exist in the IncidentInvestigation table
+            // Perform your logic here
+        }
         $incident->injuredPeople()->delete();
         $incident->witnessDetails()->delete();
         if($incident->incident_image){

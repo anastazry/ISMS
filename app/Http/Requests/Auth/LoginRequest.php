@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'worker_id' => 'required|string',
+            'username' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -40,24 +40,15 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-
-        if (! Auth::attempt($this->only('worker_id', 'password'), $this->boolean('remember'))) {
+    
+        if (! Auth::attempt(['username' => $this->username, 'password' => $this->password], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
+    
             throw ValidationException::withMessages([
-                'worker_id' => trans('auth.failed'),
+                'username' => __('auth.failed'),
             ]);
         }
-
-        $user = Auth::user();
-
-        if ($user && $user->accessToken == 0) {
-            Auth::logout(); // Log out the user
-            throw ValidationException::withMessages([
-                'worker_id' => 'Account disabled. Please contact support.',
-            ]);
-        }
-
+    
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -71,13 +62,13 @@ class LoginRequest extends FormRequest
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
-
+    
         event(new Lockout($this));
-
+    
         $seconds = RateLimiter::availableIn($this->throttleKey());
-
+    
         throw ValidationException::withMessages([
-            'worker_id' => trans('auth.throttle', [
+            'username' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -89,6 +80,7 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('worker_id')).'|'.$this->ip());
+        return Str::lower($this->input('username')).'|'.$this->ip();
     }
+    
 }

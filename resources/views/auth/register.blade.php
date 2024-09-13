@@ -15,13 +15,24 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+
+        <!-- Role -->
         <div class="mt-4">
-            <x-input-label for="worker_id" :value="__('Worker ID')" />
-            <x-text-input id="worker_id" class="block mt-1 w-full" type="text" name="worker_id" :value="old('worker_id')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('worker_id')" class="mt-2" />
+            <x-input-label for="role" :value="__('Role')" />
+            <x-text-input id="role" class="block mt-1 w-full" type="text" name="role" :value="old('role')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
+
+        <!-- Role -->
         <div class="mt-4">
-            <x-input-label for="phone_no" :value="__('Phone Number')" />
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('username')" class="mt-2" />
+        </div>
+
+        <!-- Phone No -->
+        <div class="mt-4">
+            <x-input-label for="phone_no" :value="__('Phone No')" />
             <x-text-input id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('phone_no')" class="mt-2" />
         </div>
@@ -50,6 +61,10 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                {{ __('Already registered?') }}
+            </a>
+
             <x-primary-button class="ms-4">
                 {{ __('Register') }}
             </x-primary-button>

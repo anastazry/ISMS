@@ -89,7 +89,10 @@ class IncidentInvestigationController extends Controller
             $incidentWhenAndWhere = "The incident occurred on {$incidentDateFormatted} at {$incident->incident_time}. It occurred at {$incident->incident_location}.";
         }
     
-        return view('investigation.investigation-form', compact('incident', 'incidentWhenAndWhere', 'reportNo'));
+        $breadcrumb1 = "Incident";
+        $breadcrumb2 = "Incident Investigation";
+        $headings = "Incident Investigation (Part A)";
+        return view('investigation.investigation-form', compact('incident', 'incidentWhenAndWhere', 'reportNo', 'breadcrumb1', 'breadcrumb2', 'headings'));
     }
     
     public function submitIncidentPartA(string $reportNo, Request $request){

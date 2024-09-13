@@ -612,12 +612,15 @@ class HirarcController extends Controller
             }
         }
         // Pass both $existingHazards and $auditData to the view
+        $breadcrumb1 = "HIRARC";
+        $breadcrumb2 = "Hazard Identification";
+        $headings = "Hazard Identification";
         if ($existingHazards->isNotEmpty()) {
             return view('supervisor.edit-hirarc-hazard')
                 ->with('existingHazards', $existingHazards)
-                ->with('auditData', $auditData);
+                ->with('auditData', $auditData)->with('breadcrumb1', $breadcrumb1)->with('breadcrumb2', $breadcrumb2)->with('headings', $headings);
         } else {
-            return view('supervisor.hirarc-form')->with('hirarc_id', $hirarc_id);
+            return view('supervisor.hirarc-form')->with('hirarc_id', $hirarc_id)->with('breadcrumb1', $breadcrumb1)->with('breadcrumb2', $breadcrumb2)->with('headings', $headings);
         }
     }
 
@@ -723,6 +726,10 @@ $count = 0;
         // Dd to check sorted data
         // dd($auditData->toArray());
         // Create an associative array to hold both collections
+        $breadcrumb1 = "HIRARC";
+        $breadcrumb2 = "Hazard Identification";
+        $breadcrumb3 = "Risk Assessment";
+        $headings = "Risk Assessment";
         $hazardWithRisks = [
             'updatedHazards' => $updatedHazards,
             'updatedHazardsRisks' => $updatedHazardsRisks
@@ -730,7 +737,7 @@ $count = 0;
         // dd($hazardWithRisks);
         return view('supervisor.edit-hirarc-risk')
                 ->with('hazard_data', $hazardWithRisks)
-                ->with('auditData', $auditData);
+                ->with('auditData', $auditData)->with('breadcrumb1', $breadcrumb1)->with('breadcrumb2', $breadcrumb2)->with('breadcrumb3', $breadcrumb3)->with('headings', $headings);
     }
 
     public function destroy($id)
@@ -821,9 +828,19 @@ $count = 0;
                 'updatedHazards' => $updatedHazards,
                 'updatedHazardsControl' => $updatedHazardsControl
             ];
+            $breadcrumb1 = "HIRARC";
+            $breadcrumb2 = "Hazard Identification";
+            $breadcrumb3 = "Risk Assessment";
+            $headings = "Risk Control";
+            $breadcrumbs[] = "Risk Control";
             return view('supervisor.edit-hirarc-control')
-                    ->with('hazard_data', $hazardWithControls)
-                    ->with('auditData', $auditData);
+            ->with('hazard_data', $hazardWithControls)
+            ->with('auditData', $auditData)
+            ->with('breadcrumb1', $breadcrumb1)
+            ->with('breadcrumb2', $breadcrumb2)
+            ->with('breadcrumb3', $breadcrumb3)
+            ->with('headings', $headings)
+            ->with('breadcrumbs', $breadcrumbs);
 }
 
     public function putEditControlDetails(Request $request, int $hirarc_id){
@@ -891,6 +908,7 @@ $count = 0;
                 }
                 // dd($hirarcItems['titlePage']);
                 // dd($hirarcItems);
+
                 return view('supervisor.hirarc-list', ['hirarcItems' => $hirarcItems]);
     }
 

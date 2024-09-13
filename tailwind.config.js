@@ -7,7 +7,11 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        "./node_modules/flowbite/**/*.js",
+        './vendor/rappasoft/laravel-livewire-tables/resources/views/*.blade.php',
+        './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
+        './app/Livewire/*.php',
+        './app/Livewire/**/*.php',
+        'node_modules/preline/dist/*.js',
     ],
 
     theme: {
@@ -15,12 +19,14 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            // fontSize: {
+            //     'base': '3rem',  // Increase default base size
+            // },
         },
     },
 
     plugins: [
         forms,
-        require('flowbite/plugin')
+        require('preline/plugin'),
     ],
-    
 };

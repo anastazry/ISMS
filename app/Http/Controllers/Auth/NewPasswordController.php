@@ -29,7 +29,6 @@ class NewPasswordController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        dd("camam");
         $request->validate([
             'token' => ['required'],
             'email' => ['required', 'email'],
@@ -44,7 +43,6 @@ class NewPasswordController extends Controller
             function ($user) use ($request) {
                 $user->forceFill([
                     'password' => Hash::make($request->password),
-                    'first_time_status' => 0,
                     'remember_token' => Str::random(60),
                 ])->save();
 

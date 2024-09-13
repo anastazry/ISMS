@@ -27,6 +27,7 @@ class User extends Authenticatable
         'profile_photo',
         'first_time_status',
         'accessToken',
+        'username'
         
     ];
 
@@ -50,20 +51,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function incidents()
-    {
-        return $this->hasMany(Incident::class);
-    }
-
-    public function titlepage()
-    {
-        return $this->hasMany(TitlePage::class);
-    }
-
-    public function investigationPartB()
-    {
-        return $this->hasMany(IncidentInvestigationPartB::class);
-    }
-
+    public function getAuthIdentifierName()
+{
+    return 'username';
+}
 
 }
